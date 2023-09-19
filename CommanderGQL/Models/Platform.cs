@@ -10,6 +10,5 @@ public class Platform
     [Required]
     public string Name { get; set; } = default!;
     
-    [Required]
-    public string LicenseKey { get; set; } = default!;
+    public string? LicenseKey { get; set; }
 }
