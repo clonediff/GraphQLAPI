@@ -1,6 +1,5 @@
 using CommanderGQL.Data;
 using CommanderGQL.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace CommanderGQL.GraphQL;
 
