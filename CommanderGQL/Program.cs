@@ -13,6 +13,7 @@ builder.Services.AddPooledDbContextFactory<AppDbContext>(options =>
     .AddGraphQLServer()
     .RegisterDbContext<AppDbContext>(DbContextKind.Pooled)
     .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
     .AddType<PlatformType>()
     .AddType<CommandType>()
     .AddFiltering()
@@ -57,6 +58,20 @@ query{
 query{
     platform(order: {name: DESC}){
         name
+    }
+}
+*/
+
+/*
+ mutation example:
+mutation{
+    addPlatform(input: {
+        name: "Ubuntu"
+    }){
+        platform{
+            id
+            name
+        }
     }
 }
 */
