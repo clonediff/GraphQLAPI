@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettingsConsts.CommandConStr)));
-
-builder.Services
+builder.Services.AddPooledDbContextFactory<AppDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettingsConsts.CommandConStr)))
     .AddGraphQLServer()
+    .RegisterDbContext<AppDbContext>(DbContextKind.Pooled)
     .AddQueryType<Query>();
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettingsConsts.CommandConStr)));
 
 var app = builder.Build();
 
