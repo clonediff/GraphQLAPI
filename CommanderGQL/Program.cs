@@ -14,7 +14,10 @@ builder.Services.AddPooledDbContextFactory<AppDbContext>(options =>
     .RegisterDbContext<AppDbContext>(DbContextKind.Pooled)
     .AddQueryType<Query>()
     .AddType<PlatformType>()
-    .AddType<CommandType>();
+    .AddType<CommandType>()
+    .AddFiltering()
+    .AddSorting();
+
 // builder.Services.AddDbContext<AppDbContext>(options =>
 //     options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettingsConsts.CommandConStr)));
 
@@ -34,3 +37,26 @@ app.Run();
 // dotnet ef database update -p .\CommanderGQL\ -s .\CommanderGQL\                          (Run to update db by latest migration)
 // https://localhost:5001/graphql                                                           (Opens web ui for GraphQL)
 // https://localhost:5001/graphql-voyager                                                   (Opens web ui for GraphQL voyager)
+
+/*
+ Filter Query example:
+query{
+    command(where: {platformId: {eq: 2}}){
+        id
+        platform{
+            name
+        }
+        commandLine
+        howTo
+    }
+}
+*/
+
+/*
+ Sorting Query example:
+query{
+    platform(order: {name: DESC}){
+        name
+    }
+}
+*/
