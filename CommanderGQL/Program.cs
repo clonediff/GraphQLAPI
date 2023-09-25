@@ -14,15 +14,19 @@ builder.Services.AddPooledDbContextFactory<AppDbContext>(options =>
     .RegisterDbContext<AppDbContext>(DbContextKind.Pooled)
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
+    .AddSubscriptionType<Subscription>()
     .AddType<PlatformType>()
     .AddType<CommandType>()
     .AddFiltering()
-    .AddSorting();
+    .AddSorting()
+    .AddInMemorySubscriptions();
 
 // builder.Services.AddDbContext<AppDbContext>(options =>
 //     options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettingsConsts.CommandConStr)));
 
 var app = builder.Build();
+
+app.UseWebSockets();
 
 app.MapGet("/", () => "Hello World!");
 
@@ -72,6 +76,19 @@ mutation{
             id
             name
         }
+    }
+}
+*/
+
+/*
+ При запуске запроса с подпиской, он начинает вечно ждать события. И при каждой отправке события будет отрабатывать (не работает в Postman и др., работает в браузере, 
+ т.к. работает через WebSockets)
+ 
+ subscription example:
+subscription{
+    onPlatformAdded{
+        id
+        name
     }
 }
 */
