@@ -1,4 +1,5 @@
 using CommanderGQL.Data;
+using CommanderGQL.GraphQL.Commands;
 using CommanderGQL.GraphQL.Platforms;
 using CommanderGQL.Models;
 
@@ -17,5 +18,20 @@ public class Mutation
         await context.SaveChangesAsync();
 
         return new AddPlatformPayload(platform);
+    }
+
+    public async Task<AddCommandPayload> AddCommandAsync(AddCommandInput input, AppDbContext context)
+    {
+        var command = new Command
+        {
+            HowTo = input.HowTo,
+            CommandLine = input.CommandLine,
+            PlatformId = input.PlatformId
+        };
+
+        context.Commands.Add(command);
+        await context.SaveChangesAsync();
+
+        return new AddCommandPayload(command);
     }
 }

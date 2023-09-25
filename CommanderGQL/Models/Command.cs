@@ -16,5 +16,5 @@ public class Command
     [Required]
     public int PlatformId { get; set; }
 
-    public Platform Platform { get; set; } = new();
+    public Platform Platform { get; set; } = default!;
 }
